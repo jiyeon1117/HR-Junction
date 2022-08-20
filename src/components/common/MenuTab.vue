@@ -1,6 +1,6 @@
 <template>
-  <a href="" id="MenuTab">
-    <div class="icon"></div>
+  <a id="MenuTab">
+    <img class="icon" :src="require(`../../assets/${image}`)">
     <div class="menu-title">
       <span>{{menu}}</span>
     </div>
@@ -11,7 +11,8 @@
 export default {
   name: 'MenuTab',
   props: {
-    menu: String
+    menu: String,
+    image: String
   }
 }
 </script>
@@ -22,14 +23,15 @@ export default {
   display: flex;
   height: 48px;
 }
+
 .icon{
   flex-shrink: 0;
   width: 22px;
   height: 22px;
   margin-left: 20px;
   align-self: center;
-  background-color: coral;
 }
+
 .menu-title {
 	flex-grow: 1;
   margin-left: 20px;
@@ -37,5 +39,10 @@ export default {
   font-weight: 400;
   font-size: 16px;
   color: #605E5C;
+}
+
+.click{
+  background-color: rgba(205, 115, 50, 0.1);
+  color: #CD7332;
 }
 </style>

@@ -18,22 +18,23 @@
       </button>
     </div>
     <div class="component-process">
-      <ComponentDetail/>
-      <ComponentDetail/>
-      <ComponentDetail/>
-      <ComponentDetail/>
-      <ComponentDetail/>
+      <ProcessComponentDetail/>
+      <ProcessComponentDetail/>
+      <EmailComponentDetail/>
+      <EmailComponentDetail/>
     </div>
   </div>
 </template>
 
 <script>
-import ComponentDetail from './common/ComponentDetail.vue';
+import ProcessComponentDetail from './common/ProcessComponentDetail.vue';
+import EmailComponentDetail from './common/EmailComponentDetail.vue';
 
 export default {
   name: 'ComponentsProcessMenu',
   components: {
-    ComponentDetail
+    ProcessComponentDetail,
+    EmailComponentDetail
   }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div id="side-menu">
-    <router-link to="/"><MenuTab menu="HR Infomation"/></router-link>
-    <router-link to="/RecruitingProcess"><MenuTab menu="Recruiting Process"/></router-link>
-    <router-link to="/ComponentsProcess"><MenuTab menu="Components"/></router-link>
+    <router-link to="/"><MenuTab menu="HR Infomation" image="hrInfo.png"/></router-link>
+    <router-link to="/RecruitingProcess"><MenuTab menu="Recruiting Process" image="process.png"/></router-link>
+    <router-link to="/ComponentsProcess"><MenuTab menu="Components" image="components.png"/></router-link>
   </div>
 </template>
 

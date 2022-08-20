@@ -1,18 +1,18 @@
 <template>
-  <div id="ComponentDetail">
-    ComponentDetail
+  <div id="ProcessComponentDetail">
+    ProcessComponentDetail
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ComponentDetail'
+  name: 'ProcessComponentDetail'
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#ComponentDetail{
+#ProcessComponentDetail{
   width: 342px;
   height: 226px;
   border-radius: 8px;
