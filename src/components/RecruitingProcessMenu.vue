@@ -1,11 +1,14 @@
 <template>
   <div id="container">
     <div class="add-process">
-      <button class="add-btn">
+      <button class="add-btn" @click="processModal = true">
         <img class="add-img" src="../assets/add.png">
         <span class="add">Add Process</span>
       </button>
     </div>
+    <Teleport to="body">
+      <ProcessModal :show="processModal" @close="processModal = false" />
+    </Teleport>
     <div class="recruiting-process">
       <RecruitingProcess/>
       <RecruitingProcess/>
@@ -14,12 +17,19 @@
 </template>
 
 <script>
+import ProcessModal from './common/ProcessModal.vue'
 import RecruitingProcess from './RecruitingProcess.vue';
 
 export default {
   name: 'RecruitingProcessMenu',
   components: {
-    RecruitingProcess
+    RecruitingProcess,
+    ProcessModal
+  },
+  data() {
+    return {
+      processModal: false
+    }
   }
 }
 </script>
@@ -45,6 +55,7 @@ export default {
   align-items: center;
   border-radius: 4px;
   border: none;
+  cursor: pointer;
   background-color: #CD7332;
 }
 

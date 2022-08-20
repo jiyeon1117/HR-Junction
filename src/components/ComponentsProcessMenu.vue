@@ -60,6 +60,7 @@ export default {
   align-items: center;
   border-radius: 4px;
   border: none;
+  cursor: pointer;
   background-color: #CD7332;
 }
 
@@ -82,6 +83,7 @@ export default {
 }
 
 .component-type-btn {
+  cursor: pointer;
   padding: 6px 12px;
   margin-right: 8px;
   border-radius: 100px;
