@@ -1,11 +1,14 @@
 <template>
   <div id="container">
     <div class="add-process">
-      <button class="add-btn">
+      <button class="add-btn" @click="componentModal = true">
         <img class="add-img" src="../assets/add.png">
         <span class="add">Add Component</span>
       </button>
     </div>
+    <Teleport to="body">
+      <ComponentModal :show="componentModal" @close="componentModal = false" />
+    </Teleport>
     <div class="component-type">
       <button class="component-type-btn">
         <span class="all">All</span>
@@ -18,24 +21,58 @@
       </button>
     </div>
     <div class="component-process">
-      <ProcessComponentDetail/>
-      <ProcessComponentDetail/>
-      <EmailComponentDetail/>
-      <EmailComponentDetail/>
+      <ProcessComponentDetail v-for="(item, index) in name" :key="index" :name="name[index]" :description="description[index]" :criteriaItems="criteriaItems" />
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import ComponentModal from './common/ComponentModal.vue'
 import ProcessComponentDetail from './common/ProcessComponentDetail.vue';
-import EmailComponentDetail from './common/EmailComponentDetail.vue';
+// import EmailComponentDetail from './common/EmailComponentDetail.vue';
 
 export default {
   name: 'ComponentsProcessMenu',
   components: {
     ProcessComponentDetail,
-    EmailComponentDetail
-  }
+    // EmailComponentDetail,
+    ComponentModal
+  },
+  data() {
+    return {
+      componentModal: false,
+      name: [],
+      description: [],
+      criteriaItems: [],
+      process_list: null,
+    }
+  },
+  
+  methods: {
+    initProcess() {
+      console.warn('remind')
+      axios.get(`https://d476-210-216-0-254.ngrok.io/components/process`, {}, {withCredentials: true}
+      ).then(res => {
+        this.process_list = res.data.processComponents;
+        console.log(this.process_list)
+        this.divideList();
+      })
+    },
+    divideList(){
+      for(let i of this.process_list){
+        this.name.push(i.name)
+        this.description.push(i.description)
+        this.criteriaItems.push(i.criteriaItems)
+      }
+        console.log(this.name)
+    }
+  },
+  created() {
+    if(this.process_list == null){
+      this.initProcess()
+    }
+  },
 }
 </script>
 
@@ -96,7 +133,7 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
-  justify-content: space-between;
+  margin-right: 10px;
 }
 
 

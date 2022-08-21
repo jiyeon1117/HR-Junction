@@ -13,18 +13,16 @@
             </div>
             <div class="process-name">
               <span class="name">Process Name</span>
-              <input type="text" placeholder="Write the process name">
+              <input v-model="pipelines_data.position" type="text" placeholder="Write the process name">
             </div>
             <div class="process-description">
               <span class="description">Process Description</span>
-              <input type="text" placeholder="Explanation of this process (e.g. purpose, ...)">
+              <input v-model="pipelines_data.description" type="text" placeholder="Explanation of this process (e.g. purpose, ...)">
             </div>
             <div class="process-arrange">
               <span class="arrange">Arrange Process</span>
               <div class="process-item">
-                <ProcessItem name="process 1"/>
-                <ProcessItem name="process 2"/>
-                <ProcessItem name="process 3"/>
+                <ProcessItem v-for="(items, index) in name" :key="index" :name="name[index]"/>
                 <div class="add-component">
                   <button class="add-btn">
                     <span class="add-name">+ Add components</span>
@@ -39,26 +37,26 @@
                 <div class="process-setting">
                   <div class="channel-setting">
                     <span class="channel">Select Channel</span>
-                    <input class="channel-input" type="text" placeholder="Explanation of this porcess (e.g. purpose, ...)">
+                    <input v-model="pipelines_data.notificationChannel" class="channel-input" type="text" placeholder="Explanation of this porcess (e.g. purpose, ...)">
                   </div>
                   <div class="person-setting">
                     <span class="person">Assign person in charge</span>
-                    <input class="person-input" type="text" placeholder="Search Name or Mail Address">             
+                    <input v-model="pipelines_data.managerEmails" class="person-input" type="text" placeholder="Search Name or Mail Address">             
                   </div>  
                 </div>       
                 <div class="thread-description">
                   <span class="thread">Thread Description</span>
-                  <input class="thread-input" type="text" placeholder="Write contents">
+                  <input v-model="pipelines_data.notificationContent" class="thread-input" type="text" placeholder="Write contents">
                 </div>
-                <div class="submit">
+                <!-- <div class="submit">
                   <button class="complet-btn">
                     <span class="complet">Complet</span>
                   </button>
-                </div>   
+                </div>    -->
               </div>
             </div>
 
-            <div class="process-setting">
+            <div class="process-setting" v-show="false">
               <div class="mail-type">
                 <span class="mail">Mail Type Component</span>
                 <select v-model="mail_components">
@@ -78,7 +76,7 @@
             </div>
           </div>
           <div class="save-process">
-            <button class="save-btn" @click="$emit('close')">
+            <button class="save-btn" @click="saveComponent">
               <span class="save">Save Process</span>
             </button>
           </div>
@@ -89,14 +87,67 @@
 </template>
 
 <script scoped>
+import axios from 'axios'
 import ProcessItem from './ProcessItem.vue'
 export default {
+  name: "ProcessModal",
   components: { 
     ProcessItem 
   },
   props: {
     show: Boolean
-  }
+  },
+  data() {
+    return {
+      processModal : false,
+      name: [],
+      process_list: null,
+      pipelines_data: {
+        position : "",
+        description : "",
+        pipelineComponents : {
+          processComponentId: "",
+          emailComponentId: "",
+          applicationId: "",
+          createNextMeeting: true,
+          notificationChannel: "",
+          notificationContent: "",
+          notificationIntervalTime: 0,
+          managerEmails: { 
+
+          }
+        }
+      },
+    }
+  },
+  methods: {
+    saveComponent(){
+      axios.post(`https://d476-210-216-0-254.ngrok.io/pipelines`, this.pipelines_data, {withCredentials: true}
+      ).then(res => {
+        console.warn('res', res)
+      })
+    },
+    initProcess() {
+      console.warn('remind')
+      axios.get(`https://d476-210-216-0-254.ngrok.io/pipelines`, {}, {withCredentials: true}
+      ).then(res => {
+        this.process_list = res.data.processComponents;
+        console.log(this.process_list)
+        this.divideList();
+      })
+    },
+    divideList(){
+      for(let i of this.process_list){
+        this.name.push(i.name)
+      }
+    }
+  },
+  created() {
+    if(this.process_list == null){
+      this.initProcess()
+    }
+  },
+  
 }
 </script>
 
@@ -159,7 +210,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .name, .description, .arrange, .mail, .nofitication{
@@ -268,7 +319,7 @@ select{
 .save-btn{  
   width: 903px;
   height: 60px;
-  background-color: #D6D6D6;
+  background-color: #CD7332;
   border: none;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div id="processItem">
-    <button class="item-btn">
+    <button class="item-btn" @click="clickFlag">
       <span class="item-name">{{ name }}</span>
     </button>
   </div>
@@ -11,7 +11,9 @@ export default {
   name: 'ProcessItem',
   props : {
     name : String
-  }
+  },
+  methods: {
+  },
 }
 </script>
 

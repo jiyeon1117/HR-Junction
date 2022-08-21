@@ -10,13 +10,14 @@
       <ProcessModal :show="processModal" @close="processModal = false" />
     </Teleport>
     <div class="recruiting-process">
-      <RecruitingProcess/>
+      <RecruitingProcess />
       <RecruitingProcess/>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import ProcessModal from './common/ProcessModal.vue'
 import RecruitingProcess from './RecruitingProcess.vue';
 
@@ -28,9 +29,42 @@ export default {
   },
   data() {
     return {
-      processModal: false
+      processModal: false,
+      sender: [],
+      position: [],
+      status: [],
+      pipelines_list: null,
     }
-  }
+  },
+  methods: {
+    initProcess() {
+      console.warn('remind')
+      axios.get(`https://d476-210-216-0-254.ngrok.io/applications`, {}, {withCredentials: true}
+      ).then(res => {
+        this.pipelines_list = res.data;
+        console.log(this.pipelines_list)
+        this.divideList();
+      })
+    },
+    divideList(){
+      
+      for(let i of this.pipelines_list){
+        this.sender.push(i.sender)
+        this.position.push(i.position)
+        this.status.push(i.status)
+      }
+        console.log(this.process)
+
+      // for(let i of this.process_list){
+      //   console.log("i", i.name, i.description)
+      // }
+    }
+  },
+  created() {
+    if(this.process_list == null){
+      this.initProcess()
+    }
+  },
 }
 </script>
 

@@ -7,23 +7,28 @@
     <div class="middle">
       <div class="applicant-item">
         <span class="applicant-title">Applicant</span>
-        <span class="applicant">Junction Kim</span>
+        <span class="applicant">{{sender}}</span>
       </div>
       <div class="position-item">
         <span class="position-title">Position</span>
-        <span class="position">UX Designer</span>
+        <span class="position">{{position}}</span>
       </div>
     </div>
     <div class="bottom">
-      <span class="status">Under evaluation</span>
-      <div class="manager"></div>
+      <span class="status">{{status}}</span>
+      <!-- <div class="manager"></div> -->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ReceiptDetail'
+  name: 'ReceiptDetail',
+  props: {
+    sender : String,
+    position : String,
+    status : String,
+  }
 }
 </script>
 

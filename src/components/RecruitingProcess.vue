@@ -3,21 +3,57 @@
     <span class="name">Frontend recruiting process</span>
     <span class="description">Explanation of this recruiting process</span>
     <div class="process">
-      <ProcessDetail/>
-      <ProcessDetail/>
-      <ProcessDetail/>
-      <ProcessDetail/>
+      <ProcessDetail v-for="(item, index) in name" :key="index" :num="index" :name="name" :description="description"/>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import ProcessDetail from './common/ProcessDetail.vue'
+
 export default {
   name: 'RecruitingProcess',
   components: {
     ProcessDetail
-  }
+  },
+  data() {
+    return {
+      componentModal: false,
+      name: [],
+      description: [],
+      pipelines_list: null,
+    }
+  },
+  
+  methods: {
+    initProcess() {
+      console.warn('remind')
+      axios.get(`https://d476-210-216-0-254.ngrok.io/pipelines`, {}, {withCredentials: true}
+      ).then(res => {
+        this.pipelines_list = res.data;
+        console.log(this.pipelines_list)
+        this.divideList();
+      })
+    },
+    divideList(){
+      
+      for(let i of this.pipelines_list){
+        this.name.push(i.name)
+        this.description.push(i.description)
+      }
+        console.log(this.process)
+
+      // for(let i of this.process_list){
+      //   console.log("i", i.name, i.description)
+      // }
+    }
+  },
+  created() {
+    if(this.process_list == null){
+      this.initProcess()
+    }
+  },
 }
 </script>
 

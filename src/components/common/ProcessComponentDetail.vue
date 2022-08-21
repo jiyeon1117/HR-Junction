@@ -7,25 +7,26 @@
     </div>
     <div class="middle">
       <div class="components-item">
-        <span class="components-name">Coding Test</span>
-        <span class="components-description">Explanation of this Component</span>
+        <span class="components-name">{{name}}</span>
+        <span class="components-description">{{description}}</span>
       </div>
     </div>
     <div class="border"></div>
     <div class="bottom">
       <span class="evaluation">Evaluation Items</span>
-      <span class="evaluation-items">Item explanation as sentencs</span>
-      <span class="evaluation-items">Item explanation as sentencs</span>
-      <span class="evaluation-items">Item explanation as sentencs</span>
-      <span class="evaluation-items">Item explanation as sentencs</span>
-      <span class="evaluation-items">Item explanation as sentencs</span>
+      <span class="evaluation-items">{{criteriaItems}}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ProcessComponentDetail'
+  name: 'ProcessComponentDetail',
+  props: {
+    name : String,
+    description : String,
+    criteriaItems : Array,
+  }
 }
 </script>
 
@@ -36,6 +37,7 @@ export default {
   height: 182px;
   border-radius: 8px;
   margin-bottom: 32px;
+  margin-right: 14px;
   padding: 17px 15px 21px 27px;
   background-color: white;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, .2);

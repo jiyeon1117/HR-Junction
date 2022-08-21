@@ -8,22 +8,19 @@
       <div class="documents">
         <span class="sub-title">Receipt of documents</span>
         <div class="wrap">
-          <ReceiptDetail/>
-          <ReceiptDetail/>
+          <ReceiptDetail v-for="(item, index) in sender" :key="index" :sender="sender[index]" :position="position[index]" :status="status[index]"/>
         </div>
       </div>
       <div class="ongoing">
         <span class="sub-title">Ongoing</span>
         <div class="wrap">
-          <ReceiptDetail/>
-          <ReceiptDetail/>
+          <ReceiptDetail v-for="(item, index) in sender" :key="index" :sender="sender[index]" :position="position[index]" :status="status[index]"/>
         </div>
       </div>
       <div class="completed">
         <span class="sub-title">Completed</span>
         <div class="wrap">
-          <ReceiptDetail/>
-          <ReceiptDetail/>
+          <ReceiptDetail v-for="(item, index) in sender" :key="index" :sender="sender[index]" :position="position[index]" :status="status[index]"/>
         </div>
       </div>
     </div>
@@ -31,13 +28,52 @@
 </template>
 
 <script>
+import axios from 'axios'
 import ReceiptDetail from './common/ReceiptDetail.vue';
 
 export default {
   name: 'HRInfo',
   components: {
     ReceiptDetail
-  }
+  },
+  data() {
+    return {
+      processModal: false,
+      sender: [],
+      position: [],
+      status: [],
+      application_list: null,
+    }
+  },
+  methods: {
+    initProcess() {
+      console.warn('remind')
+      axios.get(`https://d476-210-216-0-254.ngrok.io/applications`, {}, {withCredentials: true}
+      ).then(res => {
+        this.application_list = res.data;
+        console.log(this.application_list)
+        this.divideList();
+      })
+    },
+    divideList(){
+      
+      for(let i of this.application_list){
+        this.sender.push(i.sender)
+        this.position.push(i.position)
+        this.status.push(i.status)
+      }
+        console.log(this.process)
+
+      // for(let i of this.process_list){
+      //   console.log("i", i.name, i.description)
+      // }
+    }
+  },
+  created() {
+    if(this.process_list == null){
+      this.initProcess()
+    }
+  },
 }
 </script>
 

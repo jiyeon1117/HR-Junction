@@ -1,11 +1,11 @@
 <template>
   <div id="ProcessDetail">
     <div class="top">
-      <div class="number">1</div>
+      <div class="number">{{num}}</div>
     </div>
     <div class="middle">
-      <div class="name">Documents</div>
-      <div class="description">Explanation of this process</div>
+      <div class="name">{{name}}</div>
+      <div class="description">{{description}}</div>
     </div>
     <div class="process-type">
       <div class="teams-item">
@@ -23,7 +23,12 @@
 
 <script>
 export default {
-  name: 'ProcessDetail'
+  name: 'ProcessDetail',
+  props: {
+    num : Number,
+    name : String,
+    description : String
+  }
 }
 </script>
 
